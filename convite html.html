@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Convite Especial</title>
+<style>
+  :root{
+    --pink: #ff5d8f;
+    --pink-dark: #d32161;
+    --bg-top: #2b1030;
+    --bg-bottom: #120414;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .phone-container{
+    width: 360px;
+    max-width: 100%;
+    height: 700px;
+    background: linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+    border-radius: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    position: relative;
+    overflow: hidden;
+    border: 8px solid #222;
+  }
+  .phone-container::before{
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 25px;
+    background-color: #222;
+    border-radius: 15px;
+    z-index: 10;
+  }
+  .screen{
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 40px 26px;
+    position: absolute;
+    top: 0; left: 0;
+    animation: fadeIn .4s ease;
+  }
+  .screen.active{ display: flex; }
+  @keyframes fadeIn{
+    from{ opacity:0; transform: translateY(10px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+  .emoji{ font-size: 70px; margin-bottom: 20px; }
+  h2{
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+  p.sub{
+    font-size: .95rem;
+    opacity: .85;
+    margin-bottom: 24px;
+    line-height: 1.4;
+  }
+  .btn-group{
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    position: relative;
+    width: 100%;
+    justify-content: center;
+  }
+  button, .btn{
+    background-color: #ffffff;
+    color: var(--pink-dark);
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: transform .15s ease;
+  }
+  button:active{ transform: scale(0.95); }
+  #btnNao{
+    position: relative;
+    background-color: rgba(255,255,255,0.15);
+    color: #fff;
+  }
+  .dots{
+    display:flex; gap:6px; margin-top: 26px;
+  }
+  .dot{ width:6px; height:6px; border-radius:50%; background: rgba(255,255,255,0.25); }
+  .dot.on{ background: var(--pink); }
+
+  /* Tela de ideias de encontro */
+  .cards-wrap{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 34px 20px 20px;
+    color: white;
+    text-align: left;
+  }
+  .cards-wrap h2{ text-align:center; margin-bottom: 4px; }
+  .cards-wrap p.sub{ text-align:center; }
+  .cards-scroll{
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-right: 4px;
+  }
+  .date-card{
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .date-card .ic{ font-size: 26px; line-height: 1; }
+  .date-card h3{ font-size: .95rem; margin-bottom: 4px; }
+  .date-card p{ font-size: .8rem; opacity: .8; line-height: 1.35; }
+  .backlink{
+    margin-top: 14px;
+    text-align: center;
+    font-size: .8rem;
+    opacity: .7;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .heart-final{
+    font-size: 90px;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ transform: scale(1); }
+    50%{ transform: scale(1.12); }
+  }
+</style>
+</head>
+<body>
+
+<div class="phone-container">
+
+  <!-- Tela 1: Abertura -->
+  <div class="screen active" id="screen1">
+    <div class="emoji">💌</div>
+    <h2>Tenho um convite especial pra você</h2>
+    <p class="sub">Fiz isso com carinho só pra te chamar pra algo importante...</p>
+    <button onclick="goTo('screen2')">Abrir convite</button>
+    <div class="dots"><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div>
+  </div>
+
+  <!-- Tela 2: O convite (com botão "Não" que foge) -->
+  <div class="screen" id="screen2">
+    <div class="emoji">💕</div>
+    <h2>Aceita sair comigo?</h2>
+    <p class="sub">Só uma pergunta simples com uma resposta óbvia 😉</p>
+    <div class="btn-group" id="btnGroup">
+      <button onclick="goTo('screen3')">Sim!</button>
+      <button id="btnNao">Não</button>
+    </div>
+    <div class="dots"><div class="dot"></div><div class="dot on"></div><div class="dot"></div></div>
+  </div>
+
+  <!-- Tela 3: Confirmação + ideias de encontro -->
+  <div class="screen" id="screen3">
+    <div class="cards-wrap">
+      <div class="heart-final" style="align-self:center;">🎉</div>
+      <h2>Ela disse sim!</h2>
+      <p class="sub">Escolhe uma dessas ideias pra gente marcar:</p>
+      <div class="cards-scroll">
+        <div class="date-card"><div class="ic">🌅</div><div><h3>Pedra do Arpoador</h3><p>Ver o pôr do sol juntos, um dos mais bonitos do Rio.</p></div></div>
+        <div class="date-card"><div class="ic">🍽️</div><div><h3>Jantar romântico</h3><p>Só eu e você, jogando conversa fora sem pressa.</p></div></div>
+        <div class="date-card"><div class="ic">⚽</div><div><h3>Jogo do Palmeiras de casal</h3><p>Assistir a partida juntos, na torcida.</p></div></div>
+        <div class="date-card"><div class="ic">🎬</div><div><h3>Noite de filmes agarradinhos</h3><p>Sofá, cobertor e a gente bem juntinho.</p></div></div>
+        <div class="date-card"><div class="ic">👨‍👩‍👧</div><div><h3>Passeio com a Lorena</h3><p>Um role tranquilo os três juntos.</p></div></div>
+      </div>
+      <button style="margin-top:14px;" onclick="goTo('screen4')">Todas as opções</button>
+      <div class="backlink" onclick="goTo('screen2')">‹ voltar ao convite</div>
+    </div>
+  </div>
+
+  <!-- Tela 4: Mensagem final -->
+  <div class="screen" id="screen4">
+    <div class="heart-final">❤️</div>
+    <h2 style="margin-top:20px;">Você é tudo pra mim, Lua</h2>
+    <div class="backlink" onclick="goTo('screen3')">‹ voltar</div>
+  </div>
+
+</div>
+
+<script>
+  function goTo(id){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  // Botão "Não" foge do cursor/toque dentro do grupo de botões
+  const btnNao = document.getElementById('btnNao');
+  const group = document.getElementById('btnGroup');
+
+  function fugir(){
+    const groupRect = group.getBoundingClientRect();
+    const maxX = groupRect.width - btnNao.offsetWidth;
+    const maxY = 60; // limite vertical de fuga
+    const randX = Math.random() * maxX - maxX / 2;
+    const randY = Math.random() * maxY - maxY / 2;
+    btnNao.style.position = 'relative';
+    btnNao.style.left = randX + 'px';
+    btnNao.style.top = randY + 'px';
+  }
+
+  btnNao.addEventListener('mouseenter', fugir);
+  btnNao.addEventListener('touchstart', function(e){
+    e.preventDefault();
+    fugir();
+  }, { passive: false });
+</script>
+
+</body>
+</html>
